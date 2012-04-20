@@ -8,9 +8,9 @@ char msg[50]; // for when you want to sprintf stuff
 
 
 static char* test_simple_words() {
-	char *input = "foo bar baz";
+	char *input = "foo (smurf) bar \\|baz|";
 
-	define_trans_table(trans_table);
+	define_trans_table();
 	
 	lex(&input);
 	sprintf(msg, "Expected 'foo', got '%s'", token_buffer);
@@ -20,13 +20,17 @@ static char* test_simple_words() {
 	sprintf(msg, "Expected 'bar', got '%s'", token_buffer);
 	mu_assert(msg, strcmp(token_buffer, "bar") == 0);
 	
+  //lex(&input);
+  //sprintf(msg, "Expected 'baz', got '%s'", token_buffer);
+  //mu_assert(msg, strcmp(token_buffer, "baz") == 0);
+	
 	return 0;
 }
 
 static char* test_EOS() {
 	char *input = "foo bar";
 
-	define_trans_table(trans_table);
+	define_trans_table();
 	
 	lex(&input);
 	sprintf(msg, "Expected 'foo', got '%s'", token_buffer);
