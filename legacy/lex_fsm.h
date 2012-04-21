@@ -78,35 +78,39 @@ static char delimiter = 0;
 
 char token_buffer[128];
 char *tok_scanp = token_buffer;
-
+//char *input_character;
 
 
 void lex(char **cp) {
-  char *scanp = *cp;
+  char *input_character = *cp;
 
   // reset return_token
   return_token.type = UNKNOWN;
   tok_scanp = token_buffer;
 
   while (return_token.type == UNKNOWN) {
-    switch (*scanp) {
-      case ' ':	fire_event(Space, *scanp);
+    switch (*input_character) {
+      case ' ':	fire_event(Space, *input_character);
                 break;
-      case '(':	fire_event(Paren_open, *scanp);
+      case '(':	fire_event(Paren_open, *input_character);
                 break;
-      case ')':	fire_event(Paren_close, *scanp);
+      case ')':	fire_event(Paren_close, *input_character);
                 break;
-      case '\0':	fire_event(EndString, *scanp);
+      case '\0':	fire_event(EndString, *input_character);
                   break;
-      default:	fire_event(Character, *scanp);
+      default:	fire_event(Character, *input_character);
                 break;
     }
-    scanp++;
+    input_character++;
   }
 
-  *cp = scanp;
+  *cp = input_character;
 }
 
+
+static void fsm_illegal_event(char c) {
+  printf("illegal event: %c \n", c);
+};
 
 // action definitions
 void set_delimiter(char c) {
