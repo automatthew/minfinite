@@ -1,5 +1,9 @@
 #include "../include/minfinite.h"
 
+union fsm_action_arg {
+  char input_character;
+} ;
+
 /* FSM definitions  */
 
 FSM_STATES(lex,
@@ -23,13 +27,12 @@ FSM_EVENTS(lex,
 
 FSM_SETUP(lex);
 
-
 // Forward declare action functions
-static void add_to_buffer(char e);    
-static void no_op(char e);
-static void no_token(char e);
-static void end_token(char e);
-static void set_delimiter(char e);
+static void add_to_buffer(union fsm_action_arg a);    
+static void no_op(union fsm_action_arg a);
+static void no_token(union fsm_action_arg a);
+static void end_token(union fsm_action_arg a);
+static void set_delimiter(union fsm_action_arg a);
 
 void define_trans_table(void) {
   init_trans_table();
@@ -83,22 +86,24 @@ char *tok_scanp = token_buffer;
 
 void lex(char **cp) {
   char *input_character = *cp;
+  union fsm_action_arg a;
 
   // reset return_token
   return_token.type = UNKNOWN;
   tok_scanp = token_buffer;
 
   while (return_token.type == UNKNOWN) {
+    a.input_character = *input_character;
     switch (*input_character) {
-      case ' ':	fire_event(Space, *input_character);
+      case ' ':	fire_event(Space, a);
                 break;
-      case '(':	fire_event(Paren_open, *input_character);
+      case '(':	fire_event(Paren_open, a);
                 break;
-      case ')':	fire_event(Paren_close, *input_character);
+      case ')':	fire_event(Paren_close, a);
                 break;
-      case '\0':	fire_event(EndString, *input_character);
+      case '\0':	fire_event(EndString, a);
                   break;
-      default:	fire_event(Character, *input_character);
+      default:	fire_event(Character, a);
                 break;
     }
     input_character++;
@@ -108,26 +113,26 @@ void lex(char **cp) {
 }
 
 
-static void fsm_illegal_event(char c) {
-  printf("illegal event: %c \n", c);
+void fsm_illegal_event(union fsm_action_arg a) {
+  printf("illegal event: %c \n", a.input_character);
 };
 
 // action definitions
-void set_delimiter(char c) {
-  delimiter = c;
+void set_delimiter(union fsm_action_arg a) {
+  delimiter = a.input_character;
 }
 
-void no_token(char c) {
+void no_token(union fsm_action_arg a) {
   return_token.type = NO_TOK;
 }
 
-void add_to_buffer(char c) {
-  *tok_scanp++ = c;
+void add_to_buffer(union fsm_action_arg a) {
+  *tok_scanp++ = a.input_character;
 }
-void no_op(char c) {
+void no_op(union fsm_action_arg a) {
 
 }
-void end_token(char c) {
+void end_token(union fsm_action_arg a) {
   return_token.type = WORD;
 }
 

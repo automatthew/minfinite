@@ -1,13 +1,15 @@
 #include <stdio.h>
 
+union fsm_action_arg;
+
 // General functions    
-inline void fire_event(int event, char c);
+inline void fire_event(int event, union fsm_action_arg a);
 
 // Function pointer convenience
-typedef void (*fsm_action)(char c);
+typedef void (*fsm_action)(union fsm_action_arg a);
 
 // FSM user must define
-static void fsm_illegal_event(char c);
+static void fsm_illegal_event(union fsm_action_arg a);
 
 struct fsm_trans;
 
@@ -38,11 +40,11 @@ static struct fsm_trans create_transition(fsm_action a, int next);
       } \
     } \
   } \
-  void fire_event(int event, char c) \
+  void fire_event(int event, union fsm_action_arg arg) \
   { \
     struct fsm_trans transition = _trans_table[fsm_cur_state][event]; \
     fsm_cur_state = transition.next_state; \
-    transition.action(c); \
+    transition.action(arg); \
   } 
 
 
