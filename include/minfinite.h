@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 // Allow the fsm_action functions to have flexibly argument type.
 union fsm_action_arg;
 

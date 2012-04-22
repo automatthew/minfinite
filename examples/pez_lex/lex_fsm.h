@@ -81,7 +81,6 @@ static char delimiter = 0;
 
 char token_buffer[128];
 char *tok_scanp = token_buffer;
-//char *input_character;
 
 
 void lex(char **cp) {
@@ -132,7 +131,9 @@ void add_to_buffer(union fsm_action_arg a) {
 void no_op(union fsm_action_arg a) {
 
 }
+
 void end_token(union fsm_action_arg a) {
+  *tok_scanp++ = '\0';
   return_token.type = WORD;
 }
 
