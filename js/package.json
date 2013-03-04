@@ -13,10 +13,10 @@
     "type": "git",
     "url": "git@github.com:automatthew/minfinite.git"
   },
-  "homepage": "https://github.com/automatthew/minfinite"
+  "homepage": "https://github.com/automatthew/minfinite",
   "keywords": [
     "fsm",
-    "state machine",
+    "state machine"
   ],
   "license": "MIT"
 }
