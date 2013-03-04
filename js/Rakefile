@@ -1,0 +1,6 @@
+require "starter/tasks/npm"
+require "starter/tasks/git"
+
+task "build" do
+  sh "coffee -c minfinite.coffee"
+end

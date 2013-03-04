@@ -1,0 +1,22 @@
+{
+  "name": "minfinite",
+  "version": "0.1.0",
+  "description": "Minimal FSM class",
+  "author": "Matthew King <automatthew@gmail.com>",
+  "main": "minfinite.js",
+  "files": [
+    "minfinite.js"
+  ],
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:automatthew/minfinite.git"
+  },
+  "homepage": "https://github.com/automatthew/minfinite"
+  "keywords": [
+    "fsm",
+    "state machine",
+  ],
+  "license": "MIT"
+}
