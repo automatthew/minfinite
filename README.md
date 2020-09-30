@@ -1,6 +1,6 @@
 # Minfinite
 
-Simple, table based pattern for writing Finite State Machines (FSM).
+Simple, table based pattern for writing Finite State Machines (FSMs).
 
 ## JavaScript
 
